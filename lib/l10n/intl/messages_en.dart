@@ -212,6 +212,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "clearData": MessageLookupByLibrary.simpleMessage("Clear Data"),
     "clipboardExport": MessageLookupByLibrary.simpleMessage("Export clipboard"),
     "clipboardImport": MessageLookupByLibrary.simpleMessage("Clipboard import"),
+    "collectData": MessageLookupByLibrary.simpleMessage("Collect data"),
     "color": MessageLookupByLibrary.simpleMessage("Color"),
     "colorSchemes": MessageLookupByLibrary.simpleMessage("Color schemes"),
     "columns": MessageLookupByLibrary.simpleMessage("Columns"),
@@ -627,11 +628,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "pleaseUploadValidQrcode": MessageLookupByLibrary.simpleMessage(
       "Please upload a valid QR code",
     ),
+    "policyPriority": MessageLookupByLibrary.simpleMessage("Policy priority"),
     "port": MessageLookupByLibrary.simpleMessage("Port"),
     "portConflictTip": MessageLookupByLibrary.simpleMessage(
       "Please enter a different port",
     ),
     "portTip": m16,
+    "preferASN": MessageLookupByLibrary.simpleMessage("Prefer ASN"),
     "preferH3Desc": MessageLookupByLibrary.simpleMessage(
       "Prioritize the use of DOH\'s http/3",
     ),
@@ -878,6 +881,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "ruleProviders": MessageLookupByLibrary.simpleMessage("Rule providers"),
     "ruleSet": MessageLookupByLibrary.simpleMessage("Rule set"),
     "ruleTarget": MessageLookupByLibrary.simpleMessage("Rule target"),
+    "sampleRate": MessageLookupByLibrary.simpleMessage("Sample rate"),
     "save": MessageLookupByLibrary.simpleMessage("Save"),
     "saveChanges": MessageLookupByLibrary.simpleMessage(
       "Do you want to save the changes?",

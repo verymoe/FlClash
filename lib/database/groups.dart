@@ -58,6 +58,16 @@ class ProxyGroups extends Table {
 
   TextColumn get order => text().nullable()();
 
+  TextColumn get policyPriority => text().nullable()();
+
+  BoolColumn get useLightGBM => boolean().nullable()();
+
+  BoolColumn get collectData => boolean().nullable()();
+
+  RealColumn get sampleRate => real().nullable()();
+
+  BoolColumn get preferASN => boolean().nullable()();
+
   @override
   Set<Column> get primaryKey => {id};
 }
@@ -156,6 +166,11 @@ extension RawProxyGroupExt on RawProxyGroup {
       hidden: hidden,
       icon: icon,
       order: order,
+      policyPriority: policyPriority,
+      useLightGBM: useLightGBM,
+      collectData: collectData,
+      sampleRate: sampleRate,
+      preferASN: preferASN,
     );
   }
 }
@@ -185,6 +200,11 @@ extension ProxyGroupsCompanionExt on ProxyGroup {
       hidden: Value(hidden),
       icon: Value(icon),
       order: Value(order ?? this.order),
+      policyPriority: Value(policyPriority),
+      useLightGBM: Value(useLightGBM),
+      collectData: Value(collectData),
+      sampleRate: Value(sampleRate),
+      preferASN: Value(preferASN),
     );
   }
 }

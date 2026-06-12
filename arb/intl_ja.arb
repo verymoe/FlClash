@@ -537,5 +537,9 @@
   "editSsid": "SSIDを編集",
   "authorized": "許可済み",
   "tapToAuthorize": "タップして許可",
-  "suspended": "一時停止中..."
+  "suspended": "一時停止中...",
+  "policyPriority": "ポリシー優先度",
+  "collectData": "データ収集",
+  "sampleRate": "サンプリングレート",
+  "preferASN": "ASN優先"
 }

@@ -33,7 +33,7 @@ class Database extends _$Database {
   Database([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   static LazyDatabase _openConnection() {
     return LazyDatabase(() async {
@@ -51,6 +51,13 @@ class Database extends _$Database {
           await m.createTable(iconRecords);
           await _resetOrders();
           await _migrateRules(m);
+        }
+        if (from < 3) {
+          await m.addColumn(proxyGroups, proxyGroups.policyPriority);
+          await m.addColumn(proxyGroups, proxyGroups.useLightGBM);
+          await m.addColumn(proxyGroups, proxyGroups.collectData);
+          await m.addColumn(proxyGroups, proxyGroups.sampleRate);
+          await m.addColumn(proxyGroups, proxyGroups.preferASN);
         }
       },
       beforeOpen: (details) async {

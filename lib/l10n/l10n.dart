@@ -4378,6 +4378,36 @@ class AppLocalizations {
   String get suspended {
     return Intl.message('Suspended...', name: 'suspended', desc: '', args: []);
   }
+
+  /// `Policy priority`
+  String get policyPriority {
+    return Intl.message(
+      'Policy priority',
+      name: 'policyPriority',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Collect data`
+  String get collectData {
+    return Intl.message(
+      'Collect data',
+      name: 'collectData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sample rate`
+  String get sampleRate {
+    return Intl.message('Sample rate', name: 'sampleRate', desc: '', args: []);
+  }
+
+  /// `Prefer ASN`
+  String get preferASN {
+    return Intl.message('Prefer ASN', name: 'preferASN', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -31,6 +31,11 @@ _ProxyGroup _$ProxyGroupFromJson(Map<String, dynamic> json) => _ProxyGroup(
   hidden: json['hidden'] as bool?,
   icon: json['icon'] as String?,
   order: json['order'] as String?,
+  policyPriority: json['policy-priority'] as String?,
+  useLightGBM: json['uselightgbm'] as bool?,
+  collectData: json['collectdata'] as bool?,
+  sampleRate: (json['sample-rate'] as num?)?.toDouble(),
+  preferASN: json['prefer-asn'] as bool?,
 );
 
 Map<String, dynamic> _$ProxyGroupToJson(_ProxyGroup instance) =>
@@ -57,6 +62,11 @@ Map<String, dynamic> _$ProxyGroupToJson(_ProxyGroup instance) =>
       'hidden': instance.hidden,
       'icon': instance.icon,
       'order': instance.order,
+      'policy-priority': instance.policyPriority,
+      'uselightgbm': instance.useLightGBM,
+      'collectdata': instance.collectData,
+      'sample-rate': instance.sampleRate,
+      'prefer-asn': instance.preferASN,
     };
 
 const _$GroupTypeEnumMap = {
@@ -65,6 +75,7 @@ const _$GroupTypeEnumMap = {
   GroupType.Fallback: 'fallback',
   GroupType.LoadBalance: 'load-balance',
   GroupType.Relay: 'relay',
+  GroupType.Smart: 'smart',
 };
 
 _Proxy _$ProxyFromJson(Map<String, dynamic> json) => _Proxy(
@@ -308,6 +319,9 @@ _GeoXUrl _$GeoXUrlFromJson(Map<String, dynamic> json) => _GeoXUrl(
   geosite:
       json['geosite'] as String? ??
       'https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat',
+  model:
+      json['model'] as String? ??
+      'https://github.com/vernesong/mihomo/releases/download/LightGBM-Model/Model.bin',
 );
 
 Map<String, dynamic> _$GeoXUrlToJson(_GeoXUrl instance) => <String, dynamic>{
@@ -315,6 +329,7 @@ Map<String, dynamic> _$GeoXUrlToJson(_GeoXUrl instance) => <String, dynamic>{
   'asn': instance.asn,
   'geoip': instance.geoip,
   'geosite': instance.geosite,
+  'model': instance.model,
 };
 
 _Rule _$RuleFromJson(Map<String, dynamic> json) => _Rule(

@@ -140,7 +140,7 @@ func stopListeners() {
 }
 
 func patchSelectGroup(mapping map[string]string) {
-	for name, proxy := range tunnel.AllProxies() {
+	for name, proxy := range tunnel.Proxies() {
 		outbound, ok := proxy.(*adapter.Proxy)
 		if !ok {
 			continue

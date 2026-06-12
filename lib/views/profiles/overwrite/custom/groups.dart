@@ -823,6 +823,118 @@ class _EditProxyGroupViewState extends ConsumerState<_EditProxyGroupView> {
     );
   }
 
+  Widget _buildPolicyPriorityItem(String? policyPriority) {
+    final appLocalizations = context.appLocalizations;
+    return _buildItem(
+      title: Text(appLocalizations.policyPriority),
+      trailing: TextFormField(
+        textAlign: TextAlign.end,
+        initialValue: policyPriority,
+        onChanged: (value) {
+          ref
+              .read(proxyGroupProvider.notifier)
+              .update((state) => state.copyWith(policyPriority: value));
+        },
+        decoration: InputDecoration.collapsed(
+          border: const NoInputBorder(),
+          hintText: appLocalizations.optional,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildUseLightGBMItem(bool? useLightGBM) {
+    void handleChange() {
+      ref
+          .read(proxyGroupProvider.notifier)
+          .update(
+            (state) => state.copyWith(useLightGBM: !(useLightGBM ?? false)),
+          );
+    }
+
+    return _buildItem(
+      title: const Text('LightGBM'),
+      onPressed: handleChange,
+      trailing: Switch(
+        value: useLightGBM ?? false,
+        onChanged: (_) {
+          handleChange();
+        },
+      ),
+    );
+  }
+
+  Widget _buildCollectDataItem(bool? collectData) {
+    final appLocalizations = context.appLocalizations;
+    void handleChange() {
+      ref
+          .read(proxyGroupProvider.notifier)
+          .update(
+            (state) => state.copyWith(collectData: !(collectData ?? false)),
+          );
+    }
+
+    return _buildItem(
+      title: Text(appLocalizations.collectData),
+      onPressed: handleChange,
+      trailing: Switch(
+        value: collectData ?? false,
+        onChanged: (_) {
+          handleChange();
+        },
+      ),
+    );
+  }
+
+  Widget _buildSampleRateItem(double? sampleRate) {
+    final appLocalizations = context.appLocalizations;
+    return _buildItem(
+      title: Text(appLocalizations.sampleRate),
+      trailing: TextFormField(
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+        ],
+        textAlign: TextAlign.end,
+        initialValue: sampleRate?.toString(),
+        onChanged: (value) {
+          ref
+              .read(proxyGroupProvider.notifier)
+              .update(
+                (state) =>
+                    state.copyWith(sampleRate: double.tryParse(value)),
+              );
+        },
+        decoration: const InputDecoration.collapsed(
+          border: NoInputBorder(),
+          hintText: '0-1',
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPreferASNItem(bool? preferASN) {
+    final appLocalizations = context.appLocalizations;
+    void handleChange() {
+      ref
+          .read(proxyGroupProvider.notifier)
+          .update(
+            (state) => state.copyWith(preferASN: !(preferASN ?? false)),
+          );
+    }
+
+    return _buildItem(
+      title: Text(appLocalizations.preferASN),
+      onPressed: handleChange,
+      trailing: Switch(
+        value: preferASN ?? false,
+        onChanged: (_) {
+          handleChange();
+        },
+      ),
+    );
+  }
+
   Future<void> _handleDelete(int profileId, String name) async {
     final res = await globalState.showMessage(
       message: TextSpan(text: context.appLocalizations.confirmDeleteProxyGroup),
@@ -895,6 +1007,17 @@ class _EditProxyGroupViewState extends ConsumerState<_EditProxyGroupView> {
                 _buildIntervalItem(proxyGroup.interval),
               ],
             ),
+            if (proxyGroup.type == GroupType.Smart)
+              generateSectionV3(
+                title: 'Smart',
+                items: [
+                  _buildPolicyPriorityItem(proxyGroup.policyPriority),
+                  _buildUseLightGBMItem(proxyGroup.useLightGBM),
+                  _buildCollectDataItem(proxyGroup.collectData),
+                  _buildSampleRateItem(proxyGroup.sampleRate),
+                  _buildPreferASNItem(proxyGroup.preferASN),
+                ],
+              ),
             generateSectionV3(
               title: appLocalizations.action,
               items: [

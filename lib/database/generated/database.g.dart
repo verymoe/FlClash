@@ -2177,6 +2177,70 @@ class $ProxyGroupsTable extends ProxyGroups
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _policyPriorityMeta = const VerificationMeta(
+    'policyPriority',
+  );
+  @override
+  late final GeneratedColumn<String> policyPriority = GeneratedColumn<String>(
+    'policy_priority',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _useLightGBMMeta = const VerificationMeta(
+    'useLightGBM',
+  );
+  @override
+  late final GeneratedColumn<bool> useLightGBM = GeneratedColumn<bool>(
+    'use_light_g_b_m',
+    aliasedName,
+    true,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("use_light_g_b_m" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _collectDataMeta = const VerificationMeta(
+    'collectData',
+  );
+  @override
+  late final GeneratedColumn<bool> collectData = GeneratedColumn<bool>(
+    'collect_data',
+    aliasedName,
+    true,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("collect_data" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _sampleRateMeta = const VerificationMeta(
+    'sampleRate',
+  );
+  @override
+  late final GeneratedColumn<double> sampleRate = GeneratedColumn<double>(
+    'sample_rate',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _preferASNMeta = const VerificationMeta(
+    'preferASN',
+  );
+  @override
+  late final GeneratedColumn<bool> preferASN = GeneratedColumn<bool>(
+    'prefer_a_s_n',
+    aliasedName,
+    true,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("prefer_a_s_n" IN (0, 1))',
+    ),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -2201,6 +2265,11 @@ class $ProxyGroupsTable extends ProxyGroups
     hidden,
     icon,
     order,
+    policyPriority,
+    useLightGBM,
+    collectData,
+    sampleRate,
+    preferASN,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -2356,6 +2425,45 @@ class $ProxyGroupsTable extends ProxyGroups
         order.isAcceptableOrUnknown(data['order']!, _orderMeta),
       );
     }
+    if (data.containsKey('policy_priority')) {
+      context.handle(
+        _policyPriorityMeta,
+        policyPriority.isAcceptableOrUnknown(
+          data['policy_priority']!,
+          _policyPriorityMeta,
+        ),
+      );
+    }
+    if (data.containsKey('use_light_g_b_m')) {
+      context.handle(
+        _useLightGBMMeta,
+        useLightGBM.isAcceptableOrUnknown(
+          data['use_light_g_b_m']!,
+          _useLightGBMMeta,
+        ),
+      );
+    }
+    if (data.containsKey('collect_data')) {
+      context.handle(
+        _collectDataMeta,
+        collectData.isAcceptableOrUnknown(
+          data['collect_data']!,
+          _collectDataMeta,
+        ),
+      );
+    }
+    if (data.containsKey('sample_rate')) {
+      context.handle(
+        _sampleRateMeta,
+        sampleRate.isAcceptableOrUnknown(data['sample_rate']!, _sampleRateMeta),
+      );
+    }
+    if (data.containsKey('prefer_a_s_n')) {
+      context.handle(
+        _preferASNMeta,
+        preferASN.isAcceptableOrUnknown(data['prefer_a_s_n']!, _preferASNMeta),
+      );
+    }
     return context;
   }
 
@@ -2457,6 +2565,26 @@ class $ProxyGroupsTable extends ProxyGroups
         DriftSqlType.string,
         data['${effectivePrefix}order'],
       ),
+      policyPriority: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}policy_priority'],
+      ),
+      useLightGBM: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}use_light_g_b_m'],
+      ),
+      collectData: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}collect_data'],
+      ),
+      sampleRate: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}sample_rate'],
+      ),
+      preferASN: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}prefer_a_s_n'],
+      ),
     );
   }
 
@@ -2498,6 +2626,11 @@ class RawProxyGroup extends DataClass implements Insertable<RawProxyGroup> {
   final bool? hidden;
   final String? icon;
   final String? order;
+  final String? policyPriority;
+  final bool? useLightGBM;
+  final bool? collectData;
+  final double? sampleRate;
+  final bool? preferASN;
   const RawProxyGroup({
     required this.id,
     this.profileId,
@@ -2521,6 +2654,11 @@ class RawProxyGroup extends DataClass implements Insertable<RawProxyGroup> {
     this.hidden,
     this.icon,
     this.order,
+    this.policyPriority,
+    this.useLightGBM,
+    this.collectData,
+    this.sampleRate,
+    this.preferASN,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -2589,6 +2727,21 @@ class RawProxyGroup extends DataClass implements Insertable<RawProxyGroup> {
     if (!nullToAbsent || order != null) {
       map['order'] = Variable<String>(order);
     }
+    if (!nullToAbsent || policyPriority != null) {
+      map['policy_priority'] = Variable<String>(policyPriority);
+    }
+    if (!nullToAbsent || useLightGBM != null) {
+      map['use_light_g_b_m'] = Variable<bool>(useLightGBM);
+    }
+    if (!nullToAbsent || collectData != null) {
+      map['collect_data'] = Variable<bool>(collectData);
+    }
+    if (!nullToAbsent || sampleRate != null) {
+      map['sample_rate'] = Variable<double>(sampleRate);
+    }
+    if (!nullToAbsent || preferASN != null) {
+      map['prefer_a_s_n'] = Variable<bool>(preferASN);
+    }
     return map;
   }
 
@@ -2646,6 +2799,21 @@ class RawProxyGroup extends DataClass implements Insertable<RawProxyGroup> {
       order: order == null && nullToAbsent
           ? const Value.absent()
           : Value(order),
+      policyPriority: policyPriority == null && nullToAbsent
+          ? const Value.absent()
+          : Value(policyPriority),
+      useLightGBM: useLightGBM == null && nullToAbsent
+          ? const Value.absent()
+          : Value(useLightGBM),
+      collectData: collectData == null && nullToAbsent
+          ? const Value.absent()
+          : Value(collectData),
+      sampleRate: sampleRate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(sampleRate),
+      preferASN: preferASN == null && nullToAbsent
+          ? const Value.absent()
+          : Value(preferASN),
     );
   }
 
@@ -2679,6 +2847,11 @@ class RawProxyGroup extends DataClass implements Insertable<RawProxyGroup> {
       hidden: serializer.fromJson<bool?>(json['hidden']),
       icon: serializer.fromJson<String?>(json['icon']),
       order: serializer.fromJson<String?>(json['order']),
+      policyPriority: serializer.fromJson<String?>(json['policyPriority']),
+      useLightGBM: serializer.fromJson<bool?>(json['useLightGBM']),
+      collectData: serializer.fromJson<bool?>(json['collectData']),
+      sampleRate: serializer.fromJson<double?>(json['sampleRate']),
+      preferASN: serializer.fromJson<bool?>(json['preferASN']),
     );
   }
   @override
@@ -2707,6 +2880,11 @@ class RawProxyGroup extends DataClass implements Insertable<RawProxyGroup> {
       'hidden': serializer.toJson<bool?>(hidden),
       'icon': serializer.toJson<String?>(icon),
       'order': serializer.toJson<String?>(order),
+      'policyPriority': serializer.toJson<String?>(policyPriority),
+      'useLightGBM': serializer.toJson<bool?>(useLightGBM),
+      'collectData': serializer.toJson<bool?>(collectData),
+      'sampleRate': serializer.toJson<double?>(sampleRate),
+      'preferASN': serializer.toJson<bool?>(preferASN),
     };
   }
 
@@ -2733,6 +2911,11 @@ class RawProxyGroup extends DataClass implements Insertable<RawProxyGroup> {
     Value<bool?> hidden = const Value.absent(),
     Value<String?> icon = const Value.absent(),
     Value<String?> order = const Value.absent(),
+    Value<String?> policyPriority = const Value.absent(),
+    Value<bool?> useLightGBM = const Value.absent(),
+    Value<bool?> collectData = const Value.absent(),
+    Value<double?> sampleRate = const Value.absent(),
+    Value<bool?> preferASN = const Value.absent(),
   }) => RawProxyGroup(
     id: id ?? this.id,
     profileId: profileId.present ? profileId.value : this.profileId,
@@ -2766,6 +2949,13 @@ class RawProxyGroup extends DataClass implements Insertable<RawProxyGroup> {
     hidden: hidden.present ? hidden.value : this.hidden,
     icon: icon.present ? icon.value : this.icon,
     order: order.present ? order.value : this.order,
+    policyPriority: policyPriority.present
+        ? policyPriority.value
+        : this.policyPriority,
+    useLightGBM: useLightGBM.present ? useLightGBM.value : this.useLightGBM,
+    collectData: collectData.present ? collectData.value : this.collectData,
+    sampleRate: sampleRate.present ? sampleRate.value : this.sampleRate,
+    preferASN: preferASN.present ? preferASN.value : this.preferASN,
   );
   RawProxyGroup copyWithCompanion(ProxyGroupsCompanion data) {
     return RawProxyGroup(
@@ -2807,6 +2997,19 @@ class RawProxyGroup extends DataClass implements Insertable<RawProxyGroup> {
       hidden: data.hidden.present ? data.hidden.value : this.hidden,
       icon: data.icon.present ? data.icon.value : this.icon,
       order: data.order.present ? data.order.value : this.order,
+      policyPriority: data.policyPriority.present
+          ? data.policyPriority.value
+          : this.policyPriority,
+      useLightGBM: data.useLightGBM.present
+          ? data.useLightGBM.value
+          : this.useLightGBM,
+      collectData: data.collectData.present
+          ? data.collectData.value
+          : this.collectData,
+      sampleRate: data.sampleRate.present
+          ? data.sampleRate.value
+          : this.sampleRate,
+      preferASN: data.preferASN.present ? data.preferASN.value : this.preferASN,
     );
   }
 
@@ -2834,7 +3037,12 @@ class RawProxyGroup extends DataClass implements Insertable<RawProxyGroup> {
           ..write('includeAllProviders: $includeAllProviders, ')
           ..write('hidden: $hidden, ')
           ..write('icon: $icon, ')
-          ..write('order: $order')
+          ..write('order: $order, ')
+          ..write('policyPriority: $policyPriority, ')
+          ..write('useLightGBM: $useLightGBM, ')
+          ..write('collectData: $collectData, ')
+          ..write('sampleRate: $sampleRate, ')
+          ..write('preferASN: $preferASN')
           ..write(')'))
         .toString();
   }
@@ -2863,6 +3071,11 @@ class RawProxyGroup extends DataClass implements Insertable<RawProxyGroup> {
     hidden,
     icon,
     order,
+    policyPriority,
+    useLightGBM,
+    collectData,
+    sampleRate,
+    preferASN,
   ]);
   @override
   bool operator ==(Object other) =>
@@ -2889,7 +3102,12 @@ class RawProxyGroup extends DataClass implements Insertable<RawProxyGroup> {
           other.includeAllProviders == this.includeAllProviders &&
           other.hidden == this.hidden &&
           other.icon == this.icon &&
-          other.order == this.order);
+          other.order == this.order &&
+          other.policyPriority == this.policyPriority &&
+          other.useLightGBM == this.useLightGBM &&
+          other.collectData == this.collectData &&
+          other.sampleRate == this.sampleRate &&
+          other.preferASN == this.preferASN);
 }
 
 class ProxyGroupsCompanion extends UpdateCompanion<RawProxyGroup> {
@@ -2915,6 +3133,11 @@ class ProxyGroupsCompanion extends UpdateCompanion<RawProxyGroup> {
   final Value<bool?> hidden;
   final Value<String?> icon;
   final Value<String?> order;
+  final Value<String?> policyPriority;
+  final Value<bool?> useLightGBM;
+  final Value<bool?> collectData;
+  final Value<double?> sampleRate;
+  final Value<bool?> preferASN;
   const ProxyGroupsCompanion({
     this.id = const Value.absent(),
     this.profileId = const Value.absent(),
@@ -2938,6 +3161,11 @@ class ProxyGroupsCompanion extends UpdateCompanion<RawProxyGroup> {
     this.hidden = const Value.absent(),
     this.icon = const Value.absent(),
     this.order = const Value.absent(),
+    this.policyPriority = const Value.absent(),
+    this.useLightGBM = const Value.absent(),
+    this.collectData = const Value.absent(),
+    this.sampleRate = const Value.absent(),
+    this.preferASN = const Value.absent(),
   });
   ProxyGroupsCompanion.insert({
     this.id = const Value.absent(),
@@ -2962,6 +3190,11 @@ class ProxyGroupsCompanion extends UpdateCompanion<RawProxyGroup> {
     this.hidden = const Value.absent(),
     this.icon = const Value.absent(),
     this.order = const Value.absent(),
+    this.policyPriority = const Value.absent(),
+    this.useLightGBM = const Value.absent(),
+    this.collectData = const Value.absent(),
+    this.sampleRate = const Value.absent(),
+    this.preferASN = const Value.absent(),
   }) : name = Value(name),
        type = Value(type);
   static Insertable<RawProxyGroup> custom({
@@ -2987,6 +3220,11 @@ class ProxyGroupsCompanion extends UpdateCompanion<RawProxyGroup> {
     Expression<bool>? hidden,
     Expression<String>? icon,
     Expression<String>? order,
+    Expression<String>? policyPriority,
+    Expression<bool>? useLightGBM,
+    Expression<bool>? collectData,
+    Expression<double>? sampleRate,
+    Expression<bool>? preferASN,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -3012,6 +3250,11 @@ class ProxyGroupsCompanion extends UpdateCompanion<RawProxyGroup> {
       if (hidden != null) 'hidden': hidden,
       if (icon != null) 'icon': icon,
       if (order != null) 'order': order,
+      if (policyPriority != null) 'policy_priority': policyPriority,
+      if (useLightGBM != null) 'use_light_g_b_m': useLightGBM,
+      if (collectData != null) 'collect_data': collectData,
+      if (sampleRate != null) 'sample_rate': sampleRate,
+      if (preferASN != null) 'prefer_a_s_n': preferASN,
     });
   }
 
@@ -3038,6 +3281,11 @@ class ProxyGroupsCompanion extends UpdateCompanion<RawProxyGroup> {
     Value<bool?>? hidden,
     Value<String?>? icon,
     Value<String?>? order,
+    Value<String?>? policyPriority,
+    Value<bool?>? useLightGBM,
+    Value<bool?>? collectData,
+    Value<double?>? sampleRate,
+    Value<bool?>? preferASN,
   }) {
     return ProxyGroupsCompanion(
       id: id ?? this.id,
@@ -3062,6 +3310,11 @@ class ProxyGroupsCompanion extends UpdateCompanion<RawProxyGroup> {
       hidden: hidden ?? this.hidden,
       icon: icon ?? this.icon,
       order: order ?? this.order,
+      policyPriority: policyPriority ?? this.policyPriority,
+      useLightGBM: useLightGBM ?? this.useLightGBM,
+      collectData: collectData ?? this.collectData,
+      sampleRate: sampleRate ?? this.sampleRate,
+      preferASN: preferASN ?? this.preferASN,
     );
   }
 
@@ -3138,6 +3391,21 @@ class ProxyGroupsCompanion extends UpdateCompanion<RawProxyGroup> {
     if (order.present) {
       map['order'] = Variable<String>(order.value);
     }
+    if (policyPriority.present) {
+      map['policy_priority'] = Variable<String>(policyPriority.value);
+    }
+    if (useLightGBM.present) {
+      map['use_light_g_b_m'] = Variable<bool>(useLightGBM.value);
+    }
+    if (collectData.present) {
+      map['collect_data'] = Variable<bool>(collectData.value);
+    }
+    if (sampleRate.present) {
+      map['sample_rate'] = Variable<double>(sampleRate.value);
+    }
+    if (preferASN.present) {
+      map['prefer_a_s_n'] = Variable<bool>(preferASN.value);
+    }
     return map;
   }
 
@@ -3165,7 +3433,12 @@ class ProxyGroupsCompanion extends UpdateCompanion<RawProxyGroup> {
           ..write('includeAllProviders: $includeAllProviders, ')
           ..write('hidden: $hidden, ')
           ..write('icon: $icon, ')
-          ..write('order: $order')
+          ..write('order: $order, ')
+          ..write('policyPriority: $policyPriority, ')
+          ..write('useLightGBM: $useLightGBM, ')
+          ..write('collectData: $collectData, ')
+          ..write('sampleRate: $sampleRate, ')
+          ..write('preferASN: $preferASN')
           ..write(')'))
         .toString();
   }
@@ -4993,6 +5266,11 @@ typedef $$ProxyGroupsTableCreateCompanionBuilder =
       Value<bool?> hidden,
       Value<String?> icon,
       Value<String?> order,
+      Value<String?> policyPriority,
+      Value<bool?> useLightGBM,
+      Value<bool?> collectData,
+      Value<double?> sampleRate,
+      Value<bool?> preferASN,
     });
 typedef $$ProxyGroupsTableUpdateCompanionBuilder =
     ProxyGroupsCompanion Function({
@@ -5018,6 +5296,11 @@ typedef $$ProxyGroupsTableUpdateCompanionBuilder =
       Value<bool?> hidden,
       Value<String?> icon,
       Value<String?> order,
+      Value<String?> policyPriority,
+      Value<bool?> useLightGBM,
+      Value<bool?> collectData,
+      Value<double?> sampleRate,
+      Value<bool?> preferASN,
     });
 
 final class $$ProxyGroupsTableReferences
@@ -5160,6 +5443,31 @@ class $$ProxyGroupsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get policyPriority => $composableBuilder(
+    column: $table.policyPriority,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get useLightGBM => $composableBuilder(
+    column: $table.useLightGBM,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get collectData => $composableBuilder(
+    column: $table.collectData,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get sampleRate => $composableBuilder(
+    column: $table.sampleRate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get preferASN => $composableBuilder(
+    column: $table.preferASN,
+    builder: (column) => ColumnFilters(column),
+  );
+
   $$ProfilesTableFilterComposer get profileId {
     final $$ProfilesTableFilterComposer composer = $composerBuilder(
       composer: this,
@@ -5298,6 +5606,31 @@ class $$ProxyGroupsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get policyPriority => $composableBuilder(
+    column: $table.policyPriority,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get useLightGBM => $composableBuilder(
+    column: $table.useLightGBM,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get collectData => $composableBuilder(
+    column: $table.collectData,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get sampleRate => $composableBuilder(
+    column: $table.sampleRate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get preferASN => $composableBuilder(
+    column: $table.preferASN,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$ProfilesTableOrderingComposer get profileId {
     final $$ProfilesTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -5410,6 +5743,29 @@ class $$ProxyGroupsTableAnnotationComposer
   GeneratedColumn<String> get order =>
       $composableBuilder(column: $table.order, builder: (column) => column);
 
+  GeneratedColumn<String> get policyPriority => $composableBuilder(
+    column: $table.policyPriority,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get useLightGBM => $composableBuilder(
+    column: $table.useLightGBM,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get collectData => $composableBuilder(
+    column: $table.collectData,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get sampleRate => $composableBuilder(
+    column: $table.sampleRate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get preferASN =>
+      $composableBuilder(column: $table.preferASN, builder: (column) => column);
+
   $$ProfilesTableAnnotationComposer get profileId {
     final $$ProfilesTableAnnotationComposer composer = $composerBuilder(
       composer: this,
@@ -5484,6 +5840,11 @@ class $$ProxyGroupsTableTableManager
                 Value<bool?> hidden = const Value.absent(),
                 Value<String?> icon = const Value.absent(),
                 Value<String?> order = const Value.absent(),
+                Value<String?> policyPriority = const Value.absent(),
+                Value<bool?> useLightGBM = const Value.absent(),
+                Value<bool?> collectData = const Value.absent(),
+                Value<double?> sampleRate = const Value.absent(),
+                Value<bool?> preferASN = const Value.absent(),
               }) => ProxyGroupsCompanion(
                 id: id,
                 profileId: profileId,
@@ -5507,6 +5868,11 @@ class $$ProxyGroupsTableTableManager
                 hidden: hidden,
                 icon: icon,
                 order: order,
+                policyPriority: policyPriority,
+                useLightGBM: useLightGBM,
+                collectData: collectData,
+                sampleRate: sampleRate,
+                preferASN: preferASN,
               ),
           createCompanionCallback:
               ({
@@ -5532,6 +5898,11 @@ class $$ProxyGroupsTableTableManager
                 Value<bool?> hidden = const Value.absent(),
                 Value<String?> icon = const Value.absent(),
                 Value<String?> order = const Value.absent(),
+                Value<String?> policyPriority = const Value.absent(),
+                Value<bool?> useLightGBM = const Value.absent(),
+                Value<bool?> collectData = const Value.absent(),
+                Value<double?> sampleRate = const Value.absent(),
+                Value<bool?> preferASN = const Value.absent(),
               }) => ProxyGroupsCompanion.insert(
                 id: id,
                 profileId: profileId,
@@ -5555,6 +5926,11 @@ class $$ProxyGroupsTableTableManager
                 hidden: hidden,
                 icon: icon,
                 order: order,
+                policyPriority: policyPriority,
+                useLightGBM: useLightGBM,
+                collectData: collectData,
+                sampleRate: sampleRate,
+                preferASN: preferASN,
               ),
           withReferenceMapper: (p0) => p0
               .map(

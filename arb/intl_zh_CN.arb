@@ -537,5 +537,9 @@
   "editSsid": "编辑SSID",
   "authorized": "已授权",
   "tapToAuthorize": "点击授权",
-  "suspended": "挂起中..."
+  "suspended": "挂起中...",
+  "policyPriority": "策略优先级",
+  "collectData": "采集数据",
+  "sampleRate": "采样率",
+  "preferASN": "优先ASN"
 }

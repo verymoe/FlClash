@@ -219,6 +219,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "clipboardImport": MessageLookupByLibrary.simpleMessage(
       "Импорт из буфера обмена",
     ),
+    "collectData": MessageLookupByLibrary.simpleMessage("Сбор данных"),
     "color": MessageLookupByLibrary.simpleMessage("Цвет"),
     "colorSchemes": MessageLookupByLibrary.simpleMessage("Цветовые схемы"),
     "columns": MessageLookupByLibrary.simpleMessage("Столбцы"),
@@ -662,11 +663,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "pleaseUploadValidQrcode": MessageLookupByLibrary.simpleMessage(
       "Пожалуйста, загрузите действительный QR-код",
     ),
+    "policyPriority": MessageLookupByLibrary.simpleMessage(
+      "Приоритет политики",
+    ),
     "port": MessageLookupByLibrary.simpleMessage("Порт"),
     "portConflictTip": MessageLookupByLibrary.simpleMessage(
       "Введите другой порт",
     ),
     "portTip": m16,
+    "preferASN": MessageLookupByLibrary.simpleMessage("Предпочитать ASN"),
     "preferH3Desc": MessageLookupByLibrary.simpleMessage(
       "Приоритетное использование HTTP/3 для DOH",
     ),
@@ -927,6 +932,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "ruleProviders": MessageLookupByLibrary.simpleMessage("Провайдеры правил"),
     "ruleSet": MessageLookupByLibrary.simpleMessage("Набор правил"),
     "ruleTarget": MessageLookupByLibrary.simpleMessage("Цель правила"),
+    "sampleRate": MessageLookupByLibrary.simpleMessage("Частота выборки"),
     "save": MessageLookupByLibrary.simpleMessage("Сохранить"),
     "saveChanges": MessageLookupByLibrary.simpleMessage("Сохранить изменения?"),
     "script": MessageLookupByLibrary.simpleMessage("Скрипт"),

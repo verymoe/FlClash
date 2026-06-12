@@ -124,6 +124,11 @@ abstract class ProxyGroup with _$ProxyGroup {
     bool? hidden,
     String? icon,
     String? order,
+    @JsonKey(name: 'policy-priority') String? policyPriority,
+    @JsonKey(name: 'uselightgbm') bool? useLightGBM,
+    @JsonKey(name: 'collectdata') bool? collectData,
+    @JsonKey(name: 'sample-rate') double? sampleRate,
+    @JsonKey(name: 'prefer-asn') bool? preferASN,
   }) = _ProxyGroup;
 
   factory ProxyGroup.fromJson(Map<String, Object?> json) =>
@@ -328,6 +333,10 @@ abstract class GeoXUrl with _$GeoXUrl {
       'https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat',
     )
     String geosite,
+    @Default(
+      'https://github.com/vernesong/mihomo/releases/download/LightGBM-Model/Model.bin',
+    )
+    String model,
   }) = _GeoXUrl;
 
   factory GeoXUrl.fromJson(Map<String, Object?> json) =>

@@ -537,5 +537,9 @@
   "editSsid": "Edit SSID",
   "authorized": "Authorized",
   "tapToAuthorize": "Tap to authorize",
-  "suspended": "Suspended..."
+  "suspended": "Suspended...",
+  "policyPriority": "Policy priority",
+  "collectData": "Collect data",
+  "sampleRate": "Sample rate",
+  "preferASN": "Prefer ASN"
 }

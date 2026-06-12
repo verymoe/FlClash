@@ -100,9 +100,12 @@ func handleGetProxies() ProxiesData {
 	runLock.Lock()
 	defer runLock.Unlock()
 
-	nameList := config.GetProxyNameList()
+	var nameList []string
+	if currentConfig != nil {
+		nameList = currentConfig.ProxyGroupNames
+	}
 
-	proxies := tunnel.AllProxies()
+	proxies := tunnel.Proxies()
 
 	hasGlobal := false
 
@@ -118,7 +121,7 @@ func handleGetProxies() ProxiesData {
 			continue
 		}
 		switch p.Type() {
-		case constant.Selector, constant.URLTest, constant.Fallback, constant.Relay, constant.LoadBalance:
+		case constant.Selector, constant.URLTest, constant.Fallback, constant.Relay, constant.LoadBalance, constant.Smart:
 			allNames = append(allNames, name)
 		default:
 		}
@@ -148,7 +151,7 @@ func handleChangeProxy(data string, fn func(string string)) {
 		}
 		groupName := *params.GroupName
 		proxyName := *params.ProxyName
-		proxies := tunnel.AllProxies()
+		proxies := tunnel.Proxies()
 		group, ok := proxies[groupName]
 		if !ok {
 			fn("Not found group")
@@ -176,28 +179,28 @@ func handleChangeProxy(data string, fn func(string string)) {
 }
 
 func handleGetTraffic(onlyStatisticsProxy bool) string {
-	up, down := statistic.DefaultManager.NowTraffic(onlyStatisticsProxy)
+	up, down := statistic.DefaultManager.Now()
 	traffic := map[string]int64{
 		"up":   up,
 		"down": down,
 	}
 	data, err := json.Marshal(traffic)
 	if err != nil {
-		logError("Error: %s", err)
+		log.Errorln("Error: %s", err)
 		return ""
 	}
 	return string(data)
 }
 
 func handleGetTotalTraffic(onlyStatisticsProxy bool) string {
-	up, down := statistic.DefaultManager.TotalTraffic(onlyStatisticsProxy)
+	up, down := statistic.DefaultManager.Total()
 	traffic := map[string]int64{
 		"up":   up,
 		"down": down,
 	}
 	data, err := json.Marshal(traffic)
 	if err != nil {
-		logError("Error: %s", err)
+		log.Errorln("Error: %s", err)
 		return ""
 	}
 	return string(data)
@@ -225,7 +228,7 @@ func handleAsyncTestDelay(paramsString string, fn func(string)) {
 		ctx, cancel := context.WithTimeout(context.Background(), time.Millisecond*time.Duration(params.Timeout))
 		defer cancel()
 
-		proxies := tunnel.AllProxies()
+		proxies := tunnel.Proxies()
 		proxy := proxies[params.ProxyName]
 
 		delayData := &Delay{
@@ -266,7 +269,7 @@ func handleGetConnections() string {
 	snapshot := statistic.DefaultManager.Snapshot()
 	data, err := json.Marshal(snapshot)
 	if err != nil {
-		logError("Error: %s", err)
+		log.Errorln("Error: %s", err)
 		return ""
 	}
 	return string(data)
@@ -372,6 +375,15 @@ func handleUpdateGeoData(geoType string, geoName string, fn func(value string)) 
 		case "GEOSITE":
 			err := updater.UpdateGeoSiteWithPath(path)
 			if err != nil {
+				fn(err.Error())
+				return
+			}
+		case "MODEL":
+			if currentConfig != nil && currentConfig.General != nil && currentConfig.General.GeoXUrl.Model != "" {
+				updater.SetLgbmUrl(currentConfig.General.GeoXUrl.Model)
+			}
+			err := updater.UpdateLgbmModelDatabase()
+			if err != nil && err != updater.ErrGetLgbmModelUpdateSkip {
 				fn(err.Error())
 				return
 			}
@@ -529,7 +541,7 @@ func handleSetupConfig(bytes []byte) string {
 	var params = defaultSetupParams()
 	err := UnmarshalJson(bytes, params)
 	if err != nil {
-		logError("unmarshalRawConfig error %v", err)
+		log.Errorln("unmarshalRawConfig error %v", err)
 		_ = applyConfig(defaultSetupParams())
 		return err.Error()
 	}

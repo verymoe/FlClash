@@ -537,5 +537,9 @@
   "editSsid": "Изменить SSID",
   "authorized": "Разрешено",
   "tapToAuthorize": "Нажмите, чтобы разрешить",
-  "suspended": "Приостановлено..."
+  "suspended": "Приостановлено...",
+  "policyPriority": "Приоритет политики",
+  "collectData": "Сбор данных",
+  "sampleRate": "Частота выборки",
+  "preferASN": "Предпочитать ASN"
 }

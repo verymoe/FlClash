@@ -27,6 +27,7 @@ jobs:
           cache: true
 
       - name: Setup NDK
+        id: setup-ndk
         uses: nttld/setup-ndk@v1
         with:
           ndk-version: r28c
@@ -38,14 +39,10 @@ jobs:
           flutter --version
           flutter pub get
 
-      - name: Build Go Core arm64
-        run: |
-          cd plugins/setup/buildkit/build_tool
-          dart pub get
-          dart run bin/build_tool.dart android --arch arm64
-
-      - name: Build APK
+      - name: Build Go Core and APK
         run: flutter build apk --target-platform android-arm64
+        env:
+          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
       - name: Upload APK
         uses: actions/upload-artifact@v4

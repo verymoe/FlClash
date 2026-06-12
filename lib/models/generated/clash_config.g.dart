@@ -31,6 +31,12 @@ _ProxyGroup _$ProxyGroupFromJson(Map<String, dynamic> json) => _ProxyGroup(
   hidden: json['hidden'] as bool?,
   icon: json['icon'] as String?,
   order: json['order'] as String?,
+      policyPriority: json['policy-priority'] as String?,
+      uselightgbm: json['uselightgbm'] as bool?,
+      collectdata: json['collectdata'] as bool?,
+      sampleRate: (json['sample-rate'] as num?)?.toDouble(),
+      preferAsn: json['prefer-asn'] as bool?,
+
 );
 
 Map<String, dynamic> _$ProxyGroupToJson(_ProxyGroup instance) =>
@@ -65,6 +71,8 @@ const _$GroupTypeEnumMap = {
   GroupType.Fallback: 'fallback',
   GroupType.LoadBalance: 'load-balance',
   GroupType.Relay: 'relay',
+  GroupType.Smart: 'smart',
+
 };
 
 _Proxy _$ProxyFromJson(Map<String, dynamic> json) => _Proxy(
@@ -329,6 +337,12 @@ _Rule _$RuleFromJson(Map<String, dynamic> json) => _Rule(
   noResolve: json['noResolve'] as bool? ?? false,
   src: json['src'] as bool? ?? false,
   order: json['order'] as String?,
+      policyPriority: json['policy-priority'] as String?,
+      uselightgbm: json['uselightgbm'] as bool?,
+      collectdata: json['collectdata'] as bool?,
+      sampleRate: (json['sample-rate'] as num?)?.toDouble(),
+      preferAsn: json['prefer-asn'] as bool?,
+
 );
 
 Map<String, dynamic> _$RuleToJson(_Rule instance) => <String, dynamic>{

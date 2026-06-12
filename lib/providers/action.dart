@@ -402,6 +402,24 @@ class SetupAction extends _$SetupAction {
         final configFilePath = await appPath.configFilePath;
         await File(configFilePath).safeWriteAsString(yamlString);
         globalState.lastConfigMd5 = yamlMd5;
+        
+        if (system.isAndroid && yamlString.contains('type: smart') && yamlString.contains('uselightgbm: true')) {
+          final homeDirPath = await appPath.homeDirPath;
+          final modelBinFile = File('$homeDirPath/Model.bin');
+          if (!await modelBinFile.exists()) {
+            try {
+              final httpClient = HttpClient();
+              final request = await httpClient.getUrl(Uri.parse('https://github.com/vernesong/mihomo/releases/download/LightGBM-Model/Model.bin'));
+              final response = await request.close();
+              if (response.statusCode == 200) {
+                await response.pipe(modelBinFile.openWrite());
+              }
+            } catch (e) {
+              globalState.showNotifier('Failed to download Model.bin: $e');
+            }
+          }
+        }
+
         final message = await coreController.setupConfig(
           setupState: setupState,
           params: _setupParams,

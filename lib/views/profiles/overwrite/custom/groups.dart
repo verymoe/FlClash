@@ -655,6 +655,72 @@ class _EditProxyGroupViewState extends ConsumerState<_EditProxyGroupView> {
     );
   }
 
+
+  Widget _buildPolicyPriorityItem(String? policyPriority) {
+    return _buildItem(
+      title: const Text('Policy Priority'),
+      trailing: TextFormField(
+        textAlign: TextAlign.end,
+        initialValue: policyPriority,
+        onChanged: (value) {
+          ref.read(proxyGroupProvider.notifier).update((state) => state.copyWith(policyPriority: value));
+        },
+        decoration: const InputDecoration.collapsed(border: NoInputBorder(), hintText: 'Premium:0.9'),
+      ),
+    );
+  }
+
+  Widget _buildUseLightGbmItem(bool? use) {
+    return _buildItem(
+      title: const Text('Use LightGBM'),
+      trailing: Switch(
+        value: use ?? false,
+        onChanged: (value) {
+          ref.read(proxyGroupProvider.notifier).update((state) => state.copyWith(uselightgbm: value));
+        },
+      ),
+    );
+  }
+
+  Widget _buildCollectDataItem(bool? use) {
+    return _buildItem(
+      title: const Text('Collect Data'),
+      trailing: Switch(
+        value: use ?? false,
+        onChanged: (value) {
+          ref.read(proxyGroupProvider.notifier).update((state) => state.copyWith(collectdata: value));
+        },
+      ),
+    );
+  }
+
+  Widget _buildSampleRateItem(double? sampleRate) {
+    return _buildItem(
+      title: const Text('Sample Rate'),
+      trailing: TextFormField(
+        textAlign: TextAlign.end,
+        initialValue: sampleRate?.toString(),
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        onChanged: (value) {
+          ref.read(proxyGroupProvider.notifier).update((state) => state.copyWith(sampleRate: double.tryParse(value)));
+        },
+        decoration: const InputDecoration.collapsed(border: NoInputBorder(), hintText: '1.0'),
+      ),
+    );
+  }
+
+  Widget _buildPreferAsnItem(bool? use) {
+    return _buildItem(
+      title: const Text('Prefer ASN'),
+      trailing: Switch(
+        value: use ?? false,
+        onChanged: (value) {
+          ref.read(proxyGroupProvider.notifier).update((state) => state.copyWith(preferAsn: value));
+        },
+      ),
+    );
+  }
+
   Widget _buildExpectedStatusItem(String? expectedStatus) {
     final appLocalizations = context.appLocalizations;
     return _buildItem(
@@ -893,6 +959,18 @@ class _EditProxyGroupViewState extends ConsumerState<_EditProxyGroupView> {
                 _buildMaxFailedTimesItem(proxyGroup.maxFailedTimes),
                 _buildLazyItem(proxyGroup.lazy),
                 _buildIntervalItem(proxyGroup.interval),
+              ],
+            ),
+
+            if (proxyGroup.type == GroupType.Smart)
+            generateSectionV3(
+              title: 'Smart Options',
+              items: [
+                _buildPolicyPriorityItem(proxyGroup.policyPriority),
+                _buildUseLightGbmItem(proxyGroup.uselightgbm),
+                _buildCollectDataItem(proxyGroup.collectdata),
+                _buildSampleRateItem(proxyGroup.sampleRate),
+                _buildPreferAsnItem(proxyGroup.preferAsn),
               ],
             ),
             generateSectionV3(

@@ -49,7 +49,9 @@ enum GroupType {
   @JsonValue('load-balance')
   LoadBalance('load-balance'),
   @JsonValue('relay')
-  Relay('relay');
+  Relay('relay'),
+  @JsonValue('smart')
+  Smart('smart');
 
   final String value;
 
@@ -62,6 +64,7 @@ enum GroupType {
       'fallback' => Fallback,
       'load-balance' || 'loadbalance' => LoadBalance,
       'relay' => Relay,
+      'smart' => Smart,
       String() => throw UnimplementedError(),
     };
   }

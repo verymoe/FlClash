@@ -124,6 +124,11 @@ abstract class ProxyGroup with _$ProxyGroup {
     bool? hidden,
     String? icon,
     String? order,
+    @JsonKey(name: 'policy-priority') String? policyPriority,
+    bool? uselightgbm,
+    bool? collectdata,
+    @JsonKey(name: 'sample-rate') double? sampleRate,
+    @JsonKey(name: 'prefer-asn') bool? preferAsn,
   }) = _ProxyGroup;
 
   factory ProxyGroup.fromJson(Map<String, Object?> json) =>
